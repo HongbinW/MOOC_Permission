@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <settings>      <!--详细属性在Mybatis的Configuration.class文件-->
+        <setting name="safeRowBoundsEnabled" value="true"/>
+        <setting name="cacheEnabled" value="false"/>
+        <setting name="useGeneratedKeys" value="true"/>
+    </settings>
+
+    <!--<typeAliases>   &lt;!&ndash;给type起别名，此处的type是本地class&ndash;&gt;-->
+        <!--<typeAlias type="com.xxx" alias="bb"/>  &lt;!&ndash;该类以bb在sql中表示，非必须&ndash;&gt;-->
+    <!--</typeAliases>-->
+
+    <!--<plugins>   &lt;!&ndash;在mybatis中可对SQL执行前后做一些拦截监听&ndash;&gt;-->
+        <!--<plugin interceptor=""></plugin>-->
+    <!--</plugins>-->
+    <!--<typeHandlers>  &lt;!&ndash;本地类和sql的值映射不一致时，可以通过typeHandler将sql查询的对象转换为本地的对象&ndash;&gt;-->
+        <!--<typeHandler handler=""-->
+    <!--</typeHandlers>-->
+
+</configuration>

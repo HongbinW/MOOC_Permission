@@ -1,0 +1,82 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+  <!--监听上下文spring beans的加载-->
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+
+  <!--spring beans加载配置文件所在目录-->
+  <context-param>
+    <param-name>contextConfigLocation</param-name>  <!--配置文件所在目录-->
+    <param-value>classpath:applicationContext.xml</param-value> <!--指定classpath则从resources下读取，否则从WEB-INF下读取-->
+  </context-param>
+
+  <!--spring mvc 配置-->
+  <servlet>
+    <servlet-name>spring</servlet-name> <!--名字自拟-->
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>  <!--处理配发请求-->
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>spring</servlet-name>   <!--通过servletname,与servlet一一映射-->
+    <url-pattern>/</url-pattern>  <!--拦截所有请求如/login /hello等但不会匹配/ss.jsp这样的请求，即所有拦截的请求都通过DispatcherServlet处理-->
+  </servlet-mapping>
+  <!--说明：对应的配置文件，spring-servlet.xml，其中spring与servlet-name对应，后面的-servlet.xml固定-->
+
+  <!--指定编码-->
+  <filter>
+    <filter-name>encodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>    <!--配置相关参数-->
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+    <init-param>  <!--强制使用UTF-8编码-->
+      <param-name>forceEncoding</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>encodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>   <!--匹配所有的url，路径型和/ss.jsp等-->
+  </filter-mapping>
+
+  <!--配置druid基本访问-->
+  <servlet>
+    <servlet-name>DruidStatServlet</servlet-name>
+    <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+    <init-param>  <!--配置登录用户名和密码-->
+      <param-name>loginUsername</param-name>
+      <param-value>druid</param-value>
+    </init-param>
+    <init-param>
+      <param-name>loginPassword</param-name>
+      <param-value>druid</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DruidStatServlet</servlet-name>
+    <url-pattern>/sys/druid/*</url-pattern> <!--加上前缀sys，方便后期 -->
+  </servlet-mapping>
+  <filter>  <!-- Druid拦截哪些请求-->
+    <filter-name>DruidWebStatFilter</filter-name>
+    <filter-class>com.alibaba.druid.support.http.WebStatFilter</filter-class>
+    <init-param>
+      <param-name>exclusions</param-name>
+      <param-value>*.js,*.css,*.jpg,*.png,*.ico,*.gif,/sys/druid/*</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>DruidWebStatFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <!--项目启动时，若什么都不指定，会访问哪个目录-->
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+</web-app>
